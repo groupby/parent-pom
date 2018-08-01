@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.groupbyinc</groupId>
@@ -57,7 +58,53 @@
   </licenses>
 
   <properties>
+    <project.build.jdkVersion>1.8</project.build.jdkVersion>
     <project.organization.simpleName>GroupBy</project.organization.simpleName>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.build.locale>en_US</project.build.locale>
+
+    <java.version>1.8</java.version>
+
+    <codacy.project.token/>
+
+    <test.coverage.ratio>75</test.coverage.ratio>
+    <test.junit.additionalArgs/>
+    <test.runOrder>random</test.runOrder>
+    <test.forkCount>1</test.forkCount>
+    <test.reuseForks>true</test.reuseForks>
+    <test.threadLocal>false</test.threadLocal>
+    <test.groups.excluded/>
+    <test.match/>
+    <test.threadCount/>
+    <test.parallel/>
+
+    <test.integration.forkCount>1C</test.integration.forkCount>
+    <test.integration.reuseForks>true</test.integration.reuseForks>
+    <test.integration.threadLocal>false</test.integration.threadLocal>
+    <test.integration.groups/>
+    <test.integration.match/>
+    <test.integration.threadCount/>
+    <test.integration.parallel/>
+    <argLine>
+      -Xms256m
+      -Xmx512m
+      -XX:+CMSClassUnloadingEnabled
+      -Dfile.encoding=${project.build.sourceEncoding}
+      ${test.junit.additionalArgs}
+    </argLine>
+
+    <!-- # Test flags -->
+    <test.skip.unit>true</test.skip.unit>
+    <test.skip.integration>true</test.skip.integration>
+
+    <!-- # Test indicators -->
+    <test.i.positive>✓</test.i.positive>
+    <test.i.negative>✗</test.i.negative>
+    <test.i.unit>${test.i.negative}</test.i.unit>
+    <test.i.integration>${test.i.negative}</test.i.integration>
+
+    <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
   </properties>
 
   <build>
@@ -67,8 +114,187 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <source>${project.build.jdkVersion}</source>
+            <target>${project.build.jdkVersion}</target>
+            <compilerVersion>${project.build.jdkVersion}</compilerVersion>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.1.0</version>
+          <configuration>
+            <forceCreation>true</forceCreation>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <packageName/>
+              </manifest>
+              <manifestEntries>
+                <Jdk-Compatibility-Version>${project.build.jdkVersion}</Jdk-Compatibility-Version>
+                <!--suppress MavenModelInspection -->
+                <Maven-Version>${maven.version}</Maven-Version>
+                <Encoding>${project.build.sourceEncoding}</Encoding>
+                <Built-By>${project.organization.name}</Built-By>
+                <Created-By>${project.organization.name}</Created-By>
+                <!--suppress MavenModelInspection -->
+                <Created-Date>${date.current}</Created-Date>
+                <Vendor>${project.organization.name}</Vendor>
+                <Vendor-Url>${project.organization.url}</Vendor-Url>
+                <!--suppress MavenModelInspection -->
+                <Copyright>Copyright (c) ${date.current.year} ${project.organization.name}</Copyright>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+          <configuration>
+            <filesets>
+              <fileset>
+                <directory>${project.basedir}</directory>
+                <includes>
+                  <include>dependency-reduced-pom.xml</include>
+                </includes>
+              </fileset>
+            </filesets>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+          <configuration>
+            <retryFailedDeploymentCount>${repo.upload.retryAttempts}</retryFailedDeploymentCount>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.5</version>
+          <configuration>
+            <artifactId>${project.artifactId}</artifactId>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>com.soebes.maven.plugins</groupId>
+          <artifactId>echo-maven-plugin</artifactId>
+          <version>0.3.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>1.6</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>com.gavinmogan</groupId>
+          <artifactId>codacy-maven-plugin</artifactId>
+          <version>1.0.3</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.0</version>
+          <configuration>
+            <skipTests>${test.skip.unit}</skipTests>
+            <excludedGroups>${test.groups.excluded}</excludedGroups>
+            <runOrder>${test.runOrder}</runOrder>
+            <forkCount>${test.forkCount}</forkCount>
+            <reuseForks>${test.reuseForks}</reuseForks>
+            <threadCount>${test.threadCount}</threadCount>
+            <parallel>${test.parallel}</parallel>
+            <test>${test.match}</test>
+            <useFile>false</useFile>
+            <disableXmlReport>false</disableXmlReport>
+            <redirectTestOutputToFile>false</redirectTestOutputToFile>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>2.22.0</version>
+          <configuration>
+            <skipTests>${test.skip.integration}</skipTests>
+            <includes>
+              <include>**/*Test.java</include>
+              <include>**/*IT.java</include>
+            </includes>
+            <groups>${test.integration.groups}</groups>
+            <runOrder>${test.runOrder}</runOrder>
+            <forkCount>${test.integration.forkCount}</forkCount>
+            <reuseForks>${test.integration.reuseForks}</reuseForks>
+            <threadCount>${test.integration.threadCount}</threadCount>
+            <parallel>${test.integration.parallel}</parallel>
+            <useFile>false</useFile>
+            <disableXmlReport>false</disableXmlReport>
+            <redirectTestOutputToFile>false</redirectTestOutputToFile>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -76,11 +302,146 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5.3</version>
           <configuration>
-            <autoVersionSubmodules>false</autoVersionSubmodules>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
             <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
             <tagNameFormat>v@{project.version}</tagNameFormat>
             <pomFileName>pom.xml</pomFileName>
+            <goals>deploy</goals>
+            <releaseProfiles>create-release</releaseProfiles>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <executions>
+            <!-- ### set project.version.lowercase property -->
+            <execution>
+              <id>set-project.version.lowercase-property</id>
+              <goals>
+                <goal>regex-property</goal>
+              </goals>
+              <configuration>
+                <name>project.version.lowercase</name>
+                <value>${project.version}</value>
+                <regex>SNAPSHOT</regex>
+                <replacement>snapshot</replacement>
+                <failIfNoMatch>false</failIfNoMatch>
+              </configuration>
+            </execution>
+            <!-- ### set project.version.trimmed property -->
+            <execution>
+              <id>set-project.version.trimmed-property</id>
+              <goals>
+                <goal>regex-property</goal>
+              </goals>
+              <configuration>
+                <name>project.version.trimmed</name>
+                <value>${project.version}</value>
+                <regex>-SNAPSHOT</regex>
+                <replacement/>
+                <failIfNoMatch>false</failIfNoMatch>
+              </configuration>
+            </execution>
+            <!-- ### set parsedVersion property (parsed project.version into components) -->
+            <execution>
+              <id>set-parsedVersion-property</id>
+              <goals>
+                <goal>parse-version</goal>
+              </goals>
+            </execution>
+            <!-- ### set maven.version property -->
+            <execution>
+              <id>set-maven.version-property</id>
+              <goals>
+                <goal>maven-version</goal>
+              </goals>
+            </execution>
+            <!-- ### set date.current property -->
+            <execution>
+              <id>set-date.current-property</id>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.current</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>yyyy-MM-dd'T'HH:mm:ssZ</pattern>
+              </configuration>
+            </execution>
+            <!-- ### set date.current.simple property -->
+            <execution>
+              <id>set-date.current.simple-property</id>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.current.simple</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>yyyyMMddHHmmss</pattern>
+              </configuration>
+            </execution>
+            <!-- ### set date.current.year property -->
+            <execution>
+              <id>set-date.current.year-property</id>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.current.year</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>yyyy</pattern>
+              </configuration>
+            </execution>
+            <!-- ### set date.current.humanReadable property -->
+            <execution>
+              <id>set-date.current.humanReadable-property</id>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.current.humanReadable</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>MMMM d, yyyy</pattern>
+              </configuration>
+            </execution>
+            <!-- ### set date.timestamp property -->
+            <execution>
+              <id>set-date.timestamp-property</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.timestamp</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>yyyyMMddHHmmSSS</pattern>
+              </configuration>
+            </execution>
+            <!-- ### set date.timestamp.seconds property -->
+            <execution>
+              <id>set-date.timestamp.seconds-property</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>timestamp-property</goal>
+              </goals>
+              <configuration>
+                <name>date.timestamp.seconds</name>
+                <locale>${project.build.locale}</locale>
+                <pattern>ss</pattern>
+              </configuration>
+            </execution>
+            <!-- ### remove old installed artifacts from local repo to free up local disk space -->
+            <execution>
+              <id>remove-old-installers</id>
+              <goals>
+                <goal>remove-project-artifact</goal>
+              </goals>
+              <configuration>
+                <removeAll>false</removeAll>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
       </plugins>
@@ -136,9 +497,113 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
 
   </build>
+
+  <profiles>
+
+    <profile>
+      <id>coverage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-report</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-check</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <!--  implementation is needed only for Maven 2  -->
+                    <rule implementation="org.jacoco.maven.RuleConfiguration">
+                      <element>BUNDLE</element>
+                      <limits>
+                        <!--  implementation is needed only for Maven 2  -->
+                        <limit implementation="org.jacoco.report.check.Limit">
+                          <counter>COMPLEXITY</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${test.coverage.ratio}</minimum>
+                        </limit>
+                      </limits>
+                    </rule>
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.gavinmogan</groupId>
+            <artifactId>codacy-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>test-coverage</id>
+                <phase>install</phase>
+                <goals>
+                  <goal>coverage</goal>
+                </goals>
+                <configuration>
+                  <!--suppress MavenModelInspection -->
+                  <apiToken>${env.CODACY_API_TOKEN}</apiToken>
+                  <projectToken>${codacy.project.token}</projectToken>
+                  <coverageReportFile>target/site/jacoco/jacoco.xml</coverageReportFile>
+                  <codacyApiBaseUrl>https://api.codacy.com</codacyApiBaseUrl>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>create-release</id>
+      <properties>
+        <test.unit.skipTests>true</test.unit.skipTests>
+        <test.integration.skipTests>true</test.integration.skipTests>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>unit</id>
+      <properties>
+        <test.unit.skipTests>false</test.unit.skipTests>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>integration</id>
+      <properties>
+        <test.integration.skipTests>false</test.integration.skipTests>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>all</id>
+      <properties>
+        <test.unit.skipTests>false</test.unit.skipTests>
+        <test.integration.skipTests>false</test.integration.skipTests>
+      </properties>
+    </profile>
+
+  </profiles>
 
   <pluginRepositories>
     <pluginRepository>
