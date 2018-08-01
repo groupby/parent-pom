@@ -22,6 +22,18 @@ setup_builder: &setup_builder
     command: /scripts/setup.sh
 
 jobs:
+  build:
+    <<: *defaults
+    steps:
+    - checkout
+    - *restore_cache
+    - *setup_builder
+    - run: mvn -B clean install
+    - run: mvn -B dependency:go-offline
+    - save_cache:
+        <<: *cache_key
+        paths:
+        - ~/.m2
   release:
     <<: *defaults
     steps:
@@ -29,19 +41,18 @@ jobs:
     - *restore_cache
     - *setup_builder
     - run: mvn -B release:prepare release:perform
-    - run: mvn -B dependency:go-offline
-    - save_cache:
-        <<: *cache_key
-        paths:
-        - ~/.m2
 
 workflows:
   version: 2
   release:
     jobs:
+    - build:
+        context: org-global
     - hold:
         <<: *main_branch_only
         type: approval
+        requires:
+        - build
     - release:
         <<: *main_branch_only
         context: org-global
