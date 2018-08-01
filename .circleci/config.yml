@@ -1,0 +1,37 @@
+version: 2
+
+defaults: &defaults
+  docker:
+  - image: groupbyinc/circleci-java
+
+main_branch_only: &main_branch_only
+  filters:
+    branches:
+      only:
+        - develop
+
+setup_builder: &setup_builder
+  run:
+    name: Initialize Build Agent
+    command: /scripts/setup.sh
+
+jobs:
+  release:
+    <<: *defaults
+    steps:
+    - checkout
+    - *setup_builder
+    - run: mvn -B release:prepare release:perform
+
+workflows:
+  version: 2
+  release:
+    jobs:
+    - hold:
+        <<: *main_branch_only
+        type: approval
+    - release-parent-pom:
+        <<: *main_branch_only
+        context: org-global
+        requires:
+        - hold
