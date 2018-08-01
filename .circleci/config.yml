@@ -29,6 +29,7 @@ jobs:
     - *restore_cache
     - *setup_builder
     - run: mvn -B release:prepare release:perform
+    - run: mvn -B dependency:go-offline
     - save_cache:
         <<: *cache_key
         paths:
