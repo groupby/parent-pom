@@ -22,9 +22,9 @@
   </organization>
 
   <scm>
-    <url>https://github.com/groupby/common</url>
-    <connection>scm:git:git@github.com:groupby/common.git</connection>
-    <developerConnection>scm:git:git@github.com:groupby/common.git</developerConnection>
+    <url>https://github.com/groupby/parent-pom</url>
+    <connection>scm:git:git@github.com:groupby/parent-pom.git</connection>
+    <developerConnection>scm:git:git@github.com:groupby/parent-pom.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -84,7 +84,7 @@
             <autoVersionSubmodules>false</autoVersionSubmodules>
             <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
             <tagNameFormat>${project.artifactId}-v@{project.version}</tagNameFormat>
-            <pomFileName>parent-pom.xml</pomFileName>
+            <pomFileName>pom.xml</pomFileName>
           </configuration>
         </plugin>
 
