@@ -13,9 +13,6 @@ main_branch_only: &main_branch_only
 cache_key: &cache_key
   key: v1-dependencies-parent-pom
 
-restore_cache: &restore_cache
-  restore_cache: *cache_key
-
 setup_builder: &setup_builder
   run:
     name: Initialize Build Agent
@@ -26,7 +23,7 @@ jobs:
     <<: *defaults
     steps:
     - checkout
-    - *restore_cache
+    - restore_cache: *cache_key
     - *setup_builder
     - run: mvn -B clean install
     - run: mvn -B dependency:go-offline
@@ -38,7 +35,7 @@ jobs:
     <<: *defaults
     steps:
     - checkout
-    - *restore_cache
+    - restore_cache: *cache_key
     - *setup_builder
     - run: mvn -B release:prepare release:perform
 
