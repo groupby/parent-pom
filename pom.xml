@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.groupbyinc</groupId>
@@ -65,26 +66,26 @@
 
     <java.version>1.8</java.version>
 
-    <codacy.project.token />
+    <codacy.project.token/>
 
     <test.coverage.ratio>75</test.coverage.ratio>
-    <test.junit.additionalArgs />
+    <test.junit.additionalArgs/>
     <test.runOrder>random</test.runOrder>
     <test.forkCount>1</test.forkCount>
     <test.reuseForks>true</test.reuseForks>
     <test.threadLocal>false</test.threadLocal>
-    <test.groups.excluded />
-    <test.match />
-    <test.threadCount />
-    <test.parallel />
+    <test.groups.excluded/>
+    <test.match/>
+    <test.threadCount/>
+    <test.parallel/>
 
     <test.integration.forkCount>1C</test.integration.forkCount>
     <test.integration.reuseForks>true</test.integration.reuseForks>
     <test.integration.threadLocal>false</test.integration.threadLocal>
-    <test.integration.groups />
-    <test.integration.match />
-    <test.integration.threadCount />
-    <test.integration.parallel />
+    <test.integration.groups/>
+    <test.integration.match/>
+    <test.integration.threadCount/>
+    <test.integration.parallel/>
     <argLine>
       -Xms256m
       -Xmx512m
@@ -96,12 +97,21 @@
     <!-- # Test flags -->
     <test.skip.unit>true</test.skip.unit>
     <test.skip.integration>true</test.skip.integration>
+    <test.skip.functional>true</test.skip.functional>
+    <test.skip.data>true</test.skip.data>
+    <test.skip.search>true</test.skip.search>
 
     <!-- # Test indicators -->
     <test.i.positive>✓</test.i.positive>
     <test.i.negative>✗</test.i.negative>
     <test.i.unit>${test.i.negative}</test.i.unit>
     <test.i.integration>${test.i.negative}</test.i.integration>
+    <test.i.performance>${test.i.negative}</test.i.performance>
+    <test.i.regression>${test.i.negative}</test.i.regression>
+    <test.i.functional>${test.i.negative}</test.i.functional>
+    <test.i.data>${test.i.negative}</test.i.data>
+    <test.i.search>${test.i.negative}</test.i.search>
+    <test.i.skip.headless>${test.i.negative}</test.i.skip.headless>
 
     <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
   </properties>
@@ -135,7 +145,7 @@
               <manifest>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                <packageName />
+                <packageName/>
               </manifest>
               <manifestEntries>
                 <Jdk-Compatibility-Version>${project.build.jdkVersion}</Jdk-Compatibility-Version>
@@ -229,6 +239,50 @@
           <groupId>com.soebes.maven.plugins</groupId>
           <artifactId>echo-maven-plugin</artifactId>
           <version>0.3.0</version>
+          <executions>
+            <execution>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>echo</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <echos>
+              <echo>Properties:</echo>
+              <echo>project.build.jdkVersion=${project.build.jdkVersion}</echo>
+              <echo/>
+              <echo/>
+              <echo>Test Properties:</echo>
+              <echo>test.runOrder=${test.runOrder}</echo>
+              <echo>test.forkCount=${test.forkCount}</echo>
+              <echo>test.threadLocal=${test.threadLocal}</echo>
+              <echo>test.threadCount=${test.threadCount}</echo>
+              <echo>test.parallel=${test.parallel}</echo>
+              <echo>test.reuseForks=${test.reuseForks}</echo>
+              <echo/>
+              <echo>Integration Test Properties:</echo>
+              <echo>test.runOrder=${test.runOrder}</echo>
+              <echo>test.integration.forkCount=${test.integration.forkCount}</echo>
+              <echo>test.integration.threadLocal=${test.integration.threadLocal}</echo>
+              <echo>test.integration.threadCount=${test.integration.threadCount}</echo>
+              <echo>test.integration.parallel=${test.integration.parallel}</echo>
+              <echo>test.integration.reuseForks=${test.integration.reuseForks}</echo>
+              <echo/>
+              <echo>Test Matrix:</echo>
+              <echo>unit tests: [${test.i.unit}]</echo>
+              <echo>integration tests: [${test.i.integration}]</echo>
+              <echo>- performance tests: [${test.i.performance}]</echo>
+              <echo>regression tests: [${test.i.regression}]</echo>
+              <echo>- functional: [${test.i.functional}]</echo>
+              <echo>- skip.headless: [${test.i.skip.headless}]</echo>
+              <echo>- data: [${test.i.data}]</echo>
+              <echo/>
+              <echo>Run Properties:</echo>
+              <!--suppress MavenModelInspection -->
+              <echo>date.timestamp=${date.timestamp}</echo>
+            </echos>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -339,7 +393,7 @@
                 <name>project.version.trimmed</name>
                 <value>${project.version}</value>
                 <regex>-SNAPSHOT</regex>
-                <replacement />
+                <replacement/>
                 <failIfNoMatch>false</failIfNoMatch>
               </configuration>
             </execution>
@@ -581,25 +635,92 @@
       </properties>
     </profile>
 
+
+    <!-- ************* -->
+    <!-- TEST PROFILES -->
+    <!-- ************* -->
     <profile>
       <id>unit</id>
+      <activation>
+      </activation>
       <properties>
-        <test.unit.skipTests>false</test.unit.skipTests>
+        <test.i.unit>${test.i.positive}</test.i.unit>
+        <test.skip.unit>false</test.skip.unit>
       </properties>
     </profile>
 
     <profile>
       <id>integration</id>
       <properties>
-        <test.integration.skipTests>false</test.integration.skipTests>
+        <test.i.integration>${test.i.positive}</test.i.integration>
+        <test.skip.integration>false</test.skip.integration>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>performance</id>
+      <properties>
+        <test.i.integration>${test.i.positive}</test.i.integration>
+        <test.i.performance>${test.i.positive}</test.i.performance>
+        <test.skip.integration>false</test.skip.integration>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>functional</id>
+      <properties>
+        <test.i.regression>${test.i.positive}</test.i.regression>
+        <test.i.functional>${test.i.positive}</test.i.functional>
+        <test.skip.functional>false</test.skip.functional>
+        <test.skip.elasticsearch>false</test.skip.elasticsearch>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>data</id>
+      <properties>
+        <test.i.regression>${test.i.positive}</test.i.regression>
+        <test.i.data>${test.i.positive}</test.i.data>
+        <test.skip.data>false</test.skip.data>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>search</id>
+      <properties>
+        <test.i.regression>${test.i.positive}</test.i.regression>
+        <test.i.search>${test.i.positive}</test.i.search>
+        <test.skip.search>false</test.skip.search>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>regression</id>
+      <properties>
+        <test.i.regression>${test.i.positive}</test.i.regression>
+        <test.i.functional>${test.i.positive}</test.i.functional>
+        <test.i.data>${test.i.positive}</test.i.data>
+        <test.skip.functional>false</test.skip.functional>
+        <test.skip.data>false</test.skip.data>
+        <test.skip.search>false</test.skip.search>
       </properties>
     </profile>
 
     <profile>
       <id>all</id>
       <properties>
-        <test.unit.skipTests>false</test.unit.skipTests>
-        <test.integration.skipTests>false</test.integration.skipTests>
+        <test.i.unit>${test.i.positive}</test.i.unit>
+        <test.i.integration>${test.i.positive}</test.i.integration>
+        <test.i.performance>${test.i.positive}</test.i.performance>
+        <test.i.functional>${test.i.positive}</test.i.functional>
+        <test.i.data>${test.i.positive}</test.i.data>
+        <test.i.search>${test.i.positive}</test.i.search>
+
+        <test.skip.unit>false</test.skip.unit>
+        <test.skip.integration>false</test.skip.integration>
+        <test.skip.functional>false</test.skip.functional>
+        <test.skip.data>false</test.skip.data>
+        <test.skip.search>false</test.skip.search>
       </properties>
     </profile>
 
