@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.groupbyinc</groupId>
@@ -65,7 +66,7 @@
 
     <java.version>1.8</java.version>
 
-    <codacy.project.token />
+    <codacy.project.token/>
     <skip.signing>false</skip.signing>
     <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
     <project.built.artifact.base>${project.build.directory}/${project.artifactId}-${project.version}</project.built.artifact.base>
@@ -73,23 +74,23 @@
     <github.release.uber.artifact>${project.built.artifact.base}-uber.jar</github.release.uber.artifact>
 
     <test.coverage.ratio>75</test.coverage.ratio>
-    <test.junit.additionalArgs />
+    <test.junit.additionalArgs/>
     <test.runOrder>random</test.runOrder>
     <test.forkCount>1</test.forkCount>
     <test.reuseForks>true</test.reuseForks>
     <test.threadLocal>false</test.threadLocal>
-    <test.groups.excluded />
-    <test.match />
-    <test.threadCount />
-    <test.parallel />
+    <test.groups.excluded/>
+    <test.match/>
+    <test.threadCount/>
+    <test.parallel/>
 
     <test.integration.forkCount>1C</test.integration.forkCount>
     <test.integration.reuseForks>true</test.integration.reuseForks>
     <test.integration.threadLocal>false</test.integration.threadLocal>
-    <test.integration.groups />
-    <test.integration.match />
-    <test.integration.threadCount />
-    <test.integration.parallel />
+    <test.integration.groups/>
+    <test.integration.match/>
+    <test.integration.threadCount/>
+    <test.integration.parallel/>
     <argLine>
       -Xms256m
       -Xmx512m
@@ -149,7 +150,7 @@
               <manifest>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                <packageName />
+                <packageName/>
               </manifest>
               <manifestEntries>
                 <Jdk-Compatibility-Version>${project.build.jdkVersion}</Jdk-Compatibility-Version>
@@ -255,8 +256,8 @@
             <echos>
               <echo>Properties:</echo>
               <echo>project.build.jdkVersion=${project.build.jdkVersion}</echo>
-              <echo />
-              <echo />
+              <echo/>
+              <echo/>
               <echo>Test Properties:</echo>
               <echo>test.runOrder=${test.runOrder}</echo>
               <echo>test.forkCount=${test.forkCount}</echo>
@@ -264,7 +265,7 @@
               <echo>test.threadCount=${test.threadCount}</echo>
               <echo>test.parallel=${test.parallel}</echo>
               <echo>test.reuseForks=${test.reuseForks}</echo>
-              <echo />
+              <echo/>
               <echo>Integration Test Properties:</echo>
               <echo>test.runOrder=${test.runOrder}</echo>
               <echo>test.integration.forkCount=${test.integration.forkCount}</echo>
@@ -272,7 +273,7 @@
               <echo>test.integration.threadCount=${test.integration.threadCount}</echo>
               <echo>test.integration.parallel=${test.integration.parallel}</echo>
               <echo>test.integration.reuseForks=${test.integration.reuseForks}</echo>
-              <echo />
+              <echo/>
               <echo>Test Matrix:</echo>
               <echo>unit tests: [${test.i.unit}]</echo>
               <echo>integration tests: [${test.i.integration}]</echo>
@@ -281,7 +282,7 @@
               <echo>- functional: [${test.i.functional}]</echo>
               <echo>- skip.headless: [${test.i.skip.headless}]</echo>
               <echo>- data: [${test.i.data}]</echo>
-              <echo />
+              <echo/>
               <echo>Run Properties:</echo>
               <!--suppress MavenModelInspection -->
               <echo>date.timestamp=${date.timestamp}</echo>
@@ -396,7 +397,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5.3</version>
           <configuration>
-            <scmCommentPrefix><![CDATA[[maven-release-plugin] [skip ci] ]]></scmCommentPrefix>
+            <scmCommentPrefix xml:space="preserve">[maven-release-plugin] [skip ci] </scmCommentPrefix>
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
             <tagNameFormat>v@{project.version}</tagNameFormat>
@@ -434,7 +435,7 @@
                 <name>project.version.trimmed</name>
                 <value>${project.version}</value>
                 <regex>-SNAPSHOT</regex>
-                <replacement />
+                <replacement/>
                 <failIfNoMatch>false</failIfNoMatch>
               </configuration>
             </execution>
