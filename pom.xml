@@ -629,8 +629,8 @@
     <profile>
       <id>create-release</id>
       <properties>
-        <test.unit.skipTests>true</test.unit.skipTests>
-        <test.integration.skipTests>true</test.integration.skipTests>
+        <test.skip.unit>true</test.skip.unit>
+        <test.skip.integration>true</test.skip.integration>
       </properties>
     </profile>
 
