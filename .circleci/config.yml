@@ -30,7 +30,7 @@ workflows:
     - hold:
         <<: *main_branch_only
         type: approval
-    - release-parent-pom:
+    - release:
         <<: *main_branch_only
         context: org-global
         requires:
