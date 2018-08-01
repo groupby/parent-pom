@@ -397,6 +397,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5.3</version>
           <configuration>
+            <scmCommentPrefix>[maven-release-plugin] [skip ci] </scmCommentPrefix>
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
             <tagNameFormat>v@{project.version}</tagNameFormat>
