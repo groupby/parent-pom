@@ -113,6 +113,7 @@
     <test.i.search>${test.i.negative}</test.i.search>
     <test.i.skip.headless>${test.i.negative}</test.i.skip.headless>
 
+    <skip.signing>false</skip.signing>
     <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
   </properties>
 
@@ -302,6 +303,9 @@
               <goals>
                 <goal>sign</goal>
               </goals>
+              <configuration>
+                <skip>${skip.signing}</skip>
+              </configuration>
             </execution>
           </executions>
         </plugin>
@@ -315,6 +319,7 @@
             <serverId>ossrh</serverId>
             <nexusUrl>https://oss.sonatype.org</nexusUrl>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            <skipNexusStagingDeployMojo>${skip.signing}</skipNexusStagingDeployMojo>
           </configuration>
         </plugin>
 
