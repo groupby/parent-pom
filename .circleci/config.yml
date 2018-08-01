@@ -10,6 +10,12 @@ main_branch_only: &main_branch_only
       only:
         - develop
 
+cache_key: &cache_key
+  key: v1-dependencies-parent-pom
+
+restore_cache: &restore_cache
+  restore_cache: *cache_key
+
 setup_builder: &setup_builder
   run:
     name: Initialize Build Agent
@@ -20,8 +26,13 @@ jobs:
     <<: *defaults
     steps:
     - checkout
+    - *restore_cache
     - *setup_builder
     - run: mvn -B release:prepare release:perform
+    - save_cache:
+        <<: *cache_key
+        paths:
+        - ~/.m2
 
 workflows:
   version: 2
