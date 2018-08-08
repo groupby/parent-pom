@@ -81,7 +81,7 @@
     <test.coverage.ratio>0.75</test.coverage.ratio>
     <test.junit.additionalArgs />
     <test.runOrder>random</test.runOrder>
-    <test.forkCount>1</test.forkCount>
+    <test.forkCount>1C</test.forkCount>
     <test.reuseForks>true</test.reuseForks>
     <test.threadLocal>false</test.threadLocal>
     <test.groups.excluded />
@@ -97,8 +97,8 @@
     <test.integration.threadCount />
     <test.integration.parallel />
     <argLine>
-      -Xms256m
-      -Xmx512m
+      -Xms128m
+      -Xmx256m
       -XX:+CMSClassUnloadingEnabled
       -Dfile.encoding=${project.build.sourceEncoding}
       ${test.junit.additionalArgs}
