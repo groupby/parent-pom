@@ -797,8 +797,8 @@
         </property>
       </activation>
       <properties>
-        <test.forkCount>4</test.forkCount>
-        <test.integration.forkCount>4</test.integration.forkCount>
+        <test.forkCount>1C</test.forkCount>
+        <test.integration.forkCount>1C</test.integration.forkCount>
       </properties>
     </profile>
 
