@@ -5,7 +5,7 @@
 
   <groupId>com.groupbyinc</groupId>
   <artifactId>parent</artifactId>
-  <version>22-SNAPSHOT</version>
+  <version>24-SNAPSHOT</version>
 
   <packaging>pom</packaging>
 
@@ -51,6 +51,10 @@
     </developer>
   </developers>
 
+  <modules>
+    <module>oss</module>
+  </modules>
+
   <licenses>
     <license>
       <name>Proprietary</name>
@@ -70,6 +74,8 @@
     <skip.signing>false</skip.signing>
     <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
     <project.built.artifact.base>${project.build.directory}/${project.artifactId}-${project.version}</project.built.artifact.base>
+
+    <github.release.version>1.2.0</github.release.version>
     <github.release.artifact>${project.built.artifact.base}.jar</github.release.artifact>
     <github.release.uber.artifact>${project.built.artifact.base}-uber.jar</github.release.uber.artifact>
 
@@ -410,7 +416,7 @@
         <plugin>
           <groupId>de.jutzig</groupId>
           <artifactId>github-release-plugin</artifactId>
-          <version>1.2.0</version>
+          <version>${github.release.version}</version>
           <configuration>
             <description>Release v${project.version}</description>
             <releaseName>v${project.version}</releaseName>
@@ -728,6 +734,52 @@
   <profiles>
 
     <profile>
+      <id>intellij</id>
+      <activation>
+        <property>
+          <name>env.INTELLIJ_HOME</name>
+        </property>
+      </activation>
+      <properties>
+        <environment>local</environment>
+        <logger.log4j.root.level>INFO</logger.log4j.root.level>
+        <logger.log4j.com.groupbyinc.level>DEBUG</logger.log4j.com.groupbyinc.level>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>${argLine}</argLine>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <argLine>${argLine}</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>circleci</id>
+      <activation>
+        <property>
+          <name>env.CIRCLECI</name>
+        </property>
+      </activation>
+      <properties>
+        <test.forkCount>4</test.forkCount>
+        <test.integration.forkCount>4</test.integration.forkCount>
+      </properties>
+    </profile>
+
+    <profile>
       <id>coverage</id>
       <build>
         <plugins>
@@ -748,7 +800,9 @@
       <build>
         <plugins>
           <plugin>
+            <!--suppress MavenModelInspection -->
             <groupId>de.jutzig</groupId>
+            <!--suppress MavenModelInspection -->
             <artifactId>github-release-plugin</artifactId>
             <executions>
               <execution>
