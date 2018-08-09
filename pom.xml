@@ -97,8 +97,8 @@
     <test.integration.threadCount />
     <test.integration.parallel />
     <argLine>
-      -Xms128m
-      -Xmx256m
+      -Xms512m
+      -Xmx512m
       -XX:+TieredCompilation
       -XX:TieredStopAtLevel=1
       -XX:+CMSClassUnloadingEnabled
