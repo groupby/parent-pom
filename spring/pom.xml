@@ -17,7 +17,7 @@
   <description>${project.name}</description>
 
   <properties>
-    <spring.boot.version>1.4.3.RELEASE</spring.boot.version>
+    <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
 
     <groupbyinc.docker.base.version>1.8</groupbyinc.docker.base.version>
     <groupbyinc.docker.repo>groupbyinc</groupbyinc.docker.repo>
