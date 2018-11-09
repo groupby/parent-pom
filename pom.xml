@@ -75,7 +75,7 @@
     <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
     <project.built.artifact.base>${project.build.directory}/${project.artifactId}-${project.version}</project.built.artifact.base>
 
-    <github.release.version>1.2.0</github.release.version>
+    <github.release.version>1.3.0</github.release.version>
     <github.release.artifact>${project.built.artifact.base}.jar</github.release.artifact>
     <github.release.uber.artifact>${project.built.artifact.base}-uber.jar</github.release.uber.artifact>
 
