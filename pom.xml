@@ -995,7 +995,7 @@
     <pluginRepository>
       <id>groupby-public</id>
       <name>GroupBy - Public</name>
-      <url>https://artifacts.groupbyinc.com/content/groups/public/</url>
+      <url>https://maven.pkg.github.com/groupby/maven-releases/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
