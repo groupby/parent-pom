@@ -5,12 +5,12 @@
   <parent>
     <groupId>com.groupbyinc</groupId>
     <artifactId>parent</artifactId>
-    <version>44</version>
+    <version>45-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>parent-oss</artifactId>
-  <version>44</version>
+  <version>45-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GroupBy - Parent - OSS</name>
