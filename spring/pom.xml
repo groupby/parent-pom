@@ -242,14 +242,14 @@
 
   <distributionManagement>
     <repository>
-      <id>ossrh</id>
-      <name>Sonatype OSS - Releases</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>groupby-public</id>
+      <name>GroupBy - Public</name>
+      <url>https://maven.pkg.github.com/groupby/maven-releases/</url>
     </repository>
     <snapshotRepository>
-      <id>ossrh</id>
-      <name>Sonatype OSS - Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <id>groupby-public</id>
+      <name>GroupBy - Public</name>
+      <url>https://maven.pkg.github.com/groupby/maven-releases/</url>
     </snapshotRepository>
   </distributionManagement>
 
