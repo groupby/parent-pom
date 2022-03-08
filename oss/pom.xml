@@ -26,7 +26,7 @@
 
 
   <properties>
-    <repo.upload.retryAttempts>3</repo.upload.retryAttempts>
+    <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
   </properties>
 
   <build>
