@@ -25,7 +25,7 @@
     <groupbyinc.docker.maintainer>"GroupBy Engineering" &lt;eng@groupbyinc.com&gt;</groupbyinc.docker.maintainer>
     <groupbyinc.docker.java.image>${groupbyinc.docker.repo}/java:${groupbyinc.docker.base.version}</groupbyinc.docker.java.image>
 
-    <repo.upload.retryAttempts>3</repo.upload.retryAttempts>
+    <repo.upload.retryAttempts>1</repo.upload.retryAttempts>
   </properties>
 
   <dependencyManagement>
