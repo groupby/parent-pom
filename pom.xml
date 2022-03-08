@@ -4,7 +4,7 @@
 
   <groupId>com.groupbyinc</groupId>
   <artifactId>parent</artifactId>
-  <version>45</version>
+  <version>46-SNAPSHOT</version>
 
   <packaging>pom</packaging>
 
@@ -24,7 +24,7 @@
     <url>https://github.com/groupby/parent-pom</url>
     <connection>scm:git:git@github.com:groupby/parent-pom.git</connection>
     <developerConnection>scm:git:git@github.com:groupby/parent-pom.git</developerConnection>
-    <tag>v45</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <ciManagement>

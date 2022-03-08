@@ -5,12 +5,12 @@
   <parent>
     <groupId>com.groupbyinc</groupId>
     <artifactId>parent</artifactId>
-    <version>45</version>
+    <version>46-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>parent-spring</artifactId>
-  <version>45</version>
+  <version>46-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GroupBy - Parent - Spring</name>
