@@ -367,19 +367,18 @@
           </executions>
         </plugin>
 
-       <!-- <plugin>
+        <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
           <version>1.6.8</version>
           <extensions>true</extensions>
           <configuration>
-            <serverId>ossrh</serverId>
-            <nexusUrl>https://oss.sonatype.org</nexusUrl>
+            <serverId>groupby-public</serverId>
+            <nexusUrl>https://maven.pkg.github.com/groupby/maven-releases/</nexusUrl>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
             <skipNexusStagingDeployMojo>${skip.signing}</skipNexusStagingDeployMojo>
           </configuration>
         </plugin>
-        -->
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
