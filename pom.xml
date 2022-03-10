@@ -367,18 +367,19 @@
           </executions>
         </plugin>
 
-        <plugin>
+       <!-- <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
           <version>1.6.8</version>
           <extensions>true</extensions>
           <configuration>
-            <serverId>groupby-public</serverId>
-            <nexusUrl>https://maven.pkg.github.com</nexusUrl>
+            <serverId>ossrh</serverId>
+            <nexusUrl>https://oss.sonatype.org</nexusUrl>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
             <skipNexusStagingDeployMojo>${skip.signing}</skipNexusStagingDeployMojo>
           </configuration>
         </plugin>
+        -->
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -760,13 +761,13 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <inherited>false</inherited>
       </plugin>
-
+      <!--
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
         <inherited>false</inherited>
       </plugin>
-
+      -->
     </plugins>
 
   </build>
