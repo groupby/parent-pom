@@ -374,7 +374,7 @@
           <extensions>true</extensions>
           <configuration>
             <serverId>groupby-public</serverId>
-            <nexusUrl>https://maven.pkg.github.com/groupby/maven-releases/</nexusUrl>
+            <nexusUrl>https://maven.pkg.github.com</nexusUrl>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
             <skipNexusStagingDeployMojo>${skip.signing}</skipNexusStagingDeployMojo>
           </configuration>
