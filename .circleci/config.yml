@@ -37,8 +37,7 @@ jobs:
     - checkout
     - restore_cache: *cache_key
     - *setup_builder
-    - run: mvn -B release:prepare
-    - run: mvn - B deploy
+    - run: mvn -B release:prepare release:perform
 
 workflows:
   version: 2
