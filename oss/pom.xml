@@ -54,6 +54,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <inherited>false</inherited>
       </plugin>
+      <!--trigger build -->
       <!--
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
